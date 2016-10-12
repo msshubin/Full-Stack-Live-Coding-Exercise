@@ -1,3 +1,8 @@
 # Full-Stack-Live-Coding-Exercise
 
-Python + flask
+To get all works:
+
+#apt-get install python-pip
+#pip install stackexchange
+#pip install wtforms
+#pip install flask
