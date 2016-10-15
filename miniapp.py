@@ -14,15 +14,13 @@ class ReusableForm(Form):
     name = StringField('Enter a search string, queries Stack Exchange ', validators=[validators.required()])
 
 class Item(object):
-    def __init__(self, link, date, question, posted, haveanswer):
-        self.link = link
+    def __init__(self, date, question, posted, haveanswer):
         self.date = date
         self.question = question
         self.posted = posted
         self.haveanswer = haveanswer
 
 class ItemTable(Table):
-    link = Col('Link')
     date = Col('Question date')
     question = Col('Question')
     posted = Col('Author')
@@ -44,13 +42,9 @@ def hello():
             Items = []
             qs = find(name)
             for q in qs:
-                try:
-                    Items.append(Item('/<a href=' + q.link + '/>link/</a/>', q.creation_date.strftime("%d.%m.%Y"), q.title, q.owner.display_name, 'v' if q.answer_count > 0 else ''))
-                except:
-                    Items.append(Item('/<a href=' + q.link + '/>link/</a/>', q.creation_date.strftime("%d.%m.%Y"), q.title, '', 'v' if q.answer_count > 0 else ''))
+                Items.append(Item(q.creation_date.strftime("%d.%m.%Y"), q.title, q.owner.display_name if hasattr(q, 'owner') else '', 'v' if q.answer_count > 0 else ''))
 
             table = ItemTable(Items)
-            flash('some', )
             flash(table)
         else:
             flash('Enter something please')
