@@ -1,7 +1,4 @@
-#!/usr/bin/env python
 __author__ = 'ms.shubin'
-#TODO Need to do this on web
-
 import stackexchange
 
 def find(title):

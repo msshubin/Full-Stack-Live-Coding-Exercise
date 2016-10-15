@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
-        <title>Reusable Form Demo</title>
+        <title>Full-Stack-Live-Coding-Exercise</title>
     </head>
     <body>
         <form action="" method="post">
@@ -22,21 +22,24 @@
             </table>
         </form>
         {% if Items %}
+            <p>We find {{qount}} questions ordered by date creation:</p>
             <table>
                 <tr>
-                    <td align="center">Date</td>
-                    <td align="center">Question</td>
-                    <td align="center">Author</td>
-                    <td align="center">Anwered</td>
+                    <td align="center"><b>Date</b></td>
+                    <td align="center"><b>Question</b></td>
+                    <td align="center"><b>Author</b></td>
+                    <td align="center"><b>Anwered</b></td>
                 {% for item in Items%}
                     <tr>
                         <td><a href='{{item.link}}' target='blank'>{{item.date}}</a></td>
                         <td><a href='{{item.link}}' target='blank'>{{item.question}}</a></td>
                         <td><a href='{{item.link}}' target='blank'>{{item.posted}}</a></td>
-                        <td><a href='{{item.link}}' target='blank'>{{item.haveanswer}}</a></td>
+                        <td><a href='{{item.link}}' target='blank'>{% if item.answerscount > 0 %}{{item.answerscount}} answers{% else %} no aswers{% endif%}{{item.haveanswer}}</a></td>
                     </tr>
                 {% endfor %}
             </table>
+        {% elif qount == 0 %}
+            <p>There are no questions to find</p>
         {% endif %}
     </body>
 </html>
