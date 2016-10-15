@@ -14,17 +14,12 @@ class ReusableForm(Form):
     name = StringField('Enter a search string, queries Stack Exchange ', validators=[validators.required()])
 
 class Item(object):
-    def __init__(self, date, question, posted, haveanswer):
+    def __init__(self, link, date, question, posted, haveanswer):
+        self.link = link
         self.date = date
         self.question = question
         self.posted = posted
         self.haveanswer = haveanswer
-
-class ItemTable(Table):
-    date = Col('Question date')
-    question = Col('Question')
-    posted = Col('Author')
-    haveanswer = Col('Answered')
 
 @app.route("/", methods=['GET', 'POST'])
 def hello():
@@ -32,6 +27,7 @@ def hello():
 
     print
     form.errors
+    Items = []
 
     if request.method == 'POST':
         name = request.form['name']
@@ -39,17 +35,15 @@ def hello():
         name
 
         if form.validate():
-            Items = []
             qs = find(name)
             for q in qs:
-                Items.append(Item(q.creation_date.strftime("%d.%m.%Y"), q.title, q.owner.display_name if hasattr(q, 'owner') else '', 'v' if q.answer_count > 0 else ''))
+                Items.append(Item(q.link, q.creation_date.strftime("%d.%m.%Y"), q.title, q.owner.display_name if hasattr(q, 'owner') else '', 'v' if q.answer_count > 0 else ''))
 
-            table = ItemTable(Items)
-            flash(table)
         else:
             flash('Enter something please')
+            Items = []
 
-    return render_template('hello.html', form=form)
+    return render_template('hello.html', form=form, Items = Items)
 
 if __name__ == "__main__":
     app.run()

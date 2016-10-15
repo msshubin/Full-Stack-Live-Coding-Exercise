@@ -21,12 +21,22 @@
                 </tr>
             </table>
         </form>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                    {% for message in messages %}
-                        {{ message[1] }}
-                    {% endfor %}
-            {% endif %}
-        {% endwith %}
+        {% if Items %}
+            <table>
+                <tr>
+                    <td align="center">Date</td>
+                    <td align="center">Question</td>
+                    <td align="center">Author</td>
+                    <td align="center">Anwered</td>
+                {% for item in Items%}
+                    <tr>
+                        <td><a href='{{item.link}}' target='blank'>{{item.date}}</a></td>
+                        <td><a href='{{item.link}}' target='blank'>{{item.question}}</a></td>
+                        <td><a href='{{item.link}}' target='blank'>{{item.posted}}</a></td>
+                        <td><a href='{{item.link}}' target='blank'>{{item.haveanswer}}</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
     </body>
 </html>
