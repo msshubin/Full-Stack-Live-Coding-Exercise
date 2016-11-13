@@ -6,4 +6,3 @@ apt-get install python3-pip
 pip3 install py-stackexchange
 pip3 install wtforms
 pip3 install flask
-pip3 install flask_table

@@ -2,6 +2,7 @@ __author__ = 'ms.shubin'
 from flask import Flask, render_template, flash, request
 from wtforms import Form, validators, StringField
 from findmodule import find
+from werkzeug.contrib.fixers import ProxyFix
 
 # App config.
 DEBUG = True
@@ -46,6 +47,8 @@ def hello():
             qount = 0
 
     return render_template('hello.html', form=form, qount = qount, Items = Items)
+
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == "__main__":
     app.run()
